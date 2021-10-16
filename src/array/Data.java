@@ -34,11 +34,18 @@ public class Data {
 
     public void printData(){
         System.out.print("Name: ");
-        for (char c : name) System.out.print(c);
+        for (char c : name) {
+            if (c != 0) {
+                System.out.print(c);
+            }
+        }
 
         System.out.print(" | Address: ");
-        for (char c : address) System.out.print(c);
-
+        for (char c : address) {
+            if (c != 0) {
+                System.out.print(c);
+            }
+        }
         System.out.println();
     }
 

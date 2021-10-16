@@ -10,51 +10,41 @@ public class List implements ListInterface {
 
     @Override
     public void insert(Data d, Position p) {
-       if (p == null){
-           if (head == null){
-               head = new Node(d);
-           }
-           else{
-               Node temp = getLast().getX();
-               temp.setNext(new Node(d));
-           }
-       }
-
-       else{
-           //inserting in head first time
-           if (head == null){
-               head = new Node(d);
-               return;
-           }
-
-           //inserting into head, if list length more than 1
-           if (p.getX() == first().getX()){
-                Node temp = head;
+        if (head == null){
+            if (p.getX() == null) {
                 head = new Node(d);
-                head.setNext(temp);
-                return;
-           }
+            }
+            return;
+        }
 
-           //inserting into head, if whole list == head
-           if (head.getNextNode() == null && p.getX().equals(first().getX())){
-               head.setNext(new Node(d));
-               return;
-           }
+        if (p == null) {
+            Position p1 = getLast();
+            if (p1 == null) return;
+            p1.getX().setNext(new Node(d));
+            return;
+        }
 
-           Position temp = getPrevious(p);
-           //insert into last
-           if (temp != null) {
-               if (temp.getX().getNextNode() == null){
-                   temp.getX().getNextNode().setNext(new Node(d));
-               }
-               Node temp2 = temp.getX().getNextNode();
-               temp.getX().setNext(new Node(d));
-               temp.getX().getNextNode().setNext(temp2);
-           }
-       }
+        //inserting into head, if list length more than 1
+        if (p.getX().equals(first().getX())){
+            Node temp = head;
+            head = new Node(d);
+            head.setNext(temp);
+            return;
+        }
 
+        //insert into other positions
+        Position temp = getPrevious(p);
+        if (temp != null) {
+            if (temp.getX().getNextNode() == null){
+                temp.getX().getNextNode().setNext(new Node(d));
+            }
+            Node temp2 = temp.getX().getNextNode();
+            temp.getX().setNext(new Node(d));
+            temp.getX().getNextNode().setNext(temp2);
+        }
 
     }
+
 
     @Override
     public Position locate(Node x) {
@@ -141,8 +131,11 @@ public class List implements ListInterface {
     public Position getLast(){
         Node q = head;
         if (q == null) return null;
-        while (q.getNextNode() != null){
-            q = q.getNextNode();
+        Node q2 = head.getNextNode();
+        if (q2 == null) return null;
+        while (q2 != null){
+            q = q2;
+            q2 = q.getNextNode();
         }
         return new Position(q);
     }
