@@ -5,12 +5,7 @@ public class Node {
     private Node next = null;
 
     public Node(Data d) {
-        data = d;
-    }
-
-    public Node(Data d, Node n) {
-        data = d;
-        next = n;
+        data = new Data(d.getName(),d.getAddress());
     }
 
     public Node getNextNode() {
@@ -23,10 +18,6 @@ public class Node {
 
     public Data getData(){
         return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
     }
 
 }

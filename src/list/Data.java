@@ -1,7 +1,5 @@
 package list;
 
-import java.util.Arrays;
-
 public class Data {
     private final char[] name = new char[20];
     private final char[] address = new char[50];
@@ -13,6 +11,14 @@ public class Data {
             address[i] = address1[i];
     }
 
+    public char[] getAddress() {
+        return address;
+    }
+
+    public char[] getName() {
+        return name;
+    }
+
     public Data(String name, String address) {
         char[] nameArray = name.toCharArray();
         char[] addressArray = address.toCharArray();
@@ -20,14 +26,6 @@ public class Data {
             this.name[i] = nameArray[i];
         for (int i = 0; i < addressArray.length; i++)
             this.address[i] = addressArray[i];
-    }
-
-    public char[] getAddress() {
-        return address;
-    }
-
-    public char[] getName() {
-        return name;
     }
 
     public void printData(){
@@ -52,6 +50,17 @@ public class Data {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Data Data = (Data) o;
-        return Arrays.equals(name, Data.name) && Arrays.equals(address, Data.address);
+        for (int i = 0; i < name.length; i++){
+            try {
+                if (name[i] != Data.name[i]) return false;
+            }catch (Exception e){return false;}
+        }
+        for (int i = 0; i < address.length; i++){
+            try {
+                if (address[i] != Data.address[i]) return false;
+            }catch (Exception e){return false;}
+        }
+
+        return true;
     }
 }

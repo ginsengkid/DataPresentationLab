@@ -9,9 +9,7 @@ public class Position {
     public int getX() {
         return x;
     }
-    public int getP() {
-        return x;
-    }
+
     public void increaseByOne() {
         this.x += 1;
     }
@@ -20,5 +18,11 @@ public class Position {
         this.x -= 1;
     }
 
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position Data = (Position) o;
+        return (this.x == Data.x);
+    }
 
 }

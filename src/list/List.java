@@ -11,7 +11,7 @@ public class List implements ListInterface {
     @Override
     public void insert(Data d, Position p) {
         if (head == null){
-            if (p.getX() == null) {
+            if (p.getNode() == null) {
                 head = new Node(d);
             }
             return;
@@ -20,12 +20,12 @@ public class List implements ListInterface {
         if (p == null) {
             Position p1 = getLast();
             if (p1 == null) return;
-            p1.getX().setNext(new Node(d));
+            p1.getNode().setNext(new Node(d));
             return;
         }
 
         //inserting into head, if list length more than 1
-        if (p.getX().equals(first().getX())){
+        if (p.getNode().equals(first().getNode())){
             Node temp = head;
             head = new Node(d);
             head.setNext(temp);
@@ -35,22 +35,22 @@ public class List implements ListInterface {
         //insert into other positions
         Position temp = getPrevious(p);
         if (temp != null) {
-            if (temp.getX().getNextNode() == null){
-                temp.getX().getNextNode().setNext(new Node(d));
+            if (temp.getNode().getNextNode() == null){
+                temp.getNode().getNextNode().setNext(new Node(d));
             }
-            Node temp2 = temp.getX().getNextNode();
-            temp.getX().setNext(new Node(d));
-            temp.getX().getNextNode().setNext(temp2);
+            Node temp2 = temp.getNode().getNextNode();
+            temp.getNode().setNext(new Node(d));
+            temp.getNode().getNextNode().setNext(temp2);
         }
 
     }
 
 
     @Override
-    public Position locate(Node x) {
+    public Position locate(Data x) {
         Node q = head;
         while (q!=null){
-            if (q.equals(x))
+            if (q.getData().equals(x))
                 return new Position(q);
             q = q.getNextNode();
         }
@@ -58,9 +58,9 @@ public class List implements ListInterface {
     }
 
     @Override
-    public Node retrieve(Position p) throws IncorrectPositionException {
+    public Data retrieve(Position p) throws IncorrectPositionException {
         if (p == null) throw new IncorrectPositionException("no such position in this List");
-        return p.getX();
+        return p.getNode().getData();
     }
 
     @Override
@@ -68,20 +68,21 @@ public class List implements ListInterface {
         if (p == null) return;
         Position temp = getPrevious(p);
         if (temp != null){
-            temp.getX().setNext(temp.getX().getNextNode().getNextNode());
-            p.setP(temp.getX().getNextNode());
+            Node tempNode = temp.getNode().getNextNode();
+            temp.getNode().setNext(tempNode.getNextNode());
+            p.setP(temp.getNode().getNextNode());
         }
     }
 
     @Override
     public Position next(Position p) throws IncorrectPositionException {
-        if (p.getX() == null) throw new IncorrectPositionException("No such position in the list");
-        return new Position(p.getX().getNextNode());
+        if (p.getNode() == null) throw new IncorrectPositionException("No such position in the list");
+        return new Position(p.getNode().getNextNode());
     }
 
     @Override
     public Position previous(Position p) throws IncorrectPositionException {
-        if (p == null || p.getX() == head) throw new IncorrectPositionException("No such position in the list");
+        if (p == null || p.getNode() == head) throw new IncorrectPositionException("No such position in the list");
 
         Position result = getPrevious(p);
         if (result != null) return result;
@@ -114,12 +115,12 @@ public class List implements ListInterface {
         }
     }
 
-    public Position getPrevious(Position p){
+    private Position getPrevious(Position p){
         Node q = head;
         Node q2 = head.getNextNode();
 
         while (q2 != null){
-            if (p.getX() == q2){
+            if (p.getNode() == q2){
                 return new Position(q);
             }
             q = q.getNextNode();
@@ -128,7 +129,7 @@ public class List implements ListInterface {
         return null;
     }
 
-    public Position getLast(){
+    private Position getLast(){
         Node q = head;
         if (q == null) return null;
         Node q2 = head.getNextNode();
@@ -141,7 +142,7 @@ public class List implements ListInterface {
     }
 
     @Override
-    public Node end() {
+    public Position end() {
         return null;
     }
 }

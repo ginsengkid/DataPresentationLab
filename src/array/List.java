@@ -85,8 +85,8 @@ public class List implements ArrayInterface {
     }
 
     @Override
-    public int end() {
-        return End.getX();
+    public Position end() {
+        return End;
     }
 
     @Override

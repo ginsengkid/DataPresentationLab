@@ -1,5 +1,4 @@
 package array;
-
 public class Test {
     public static void main(String[] args) throws IncorrectPositionException {
         List L = new List();
@@ -7,9 +6,9 @@ public class Test {
 
         Position p,q;
         p = L.first();
-        while (p.getP() != L.end()){
+        while (!p.equals(L.end())){
             q = L.next(p);
-            while (q.getP() != L.end()){
+            while (!q.equals(L.end())){
                 if (L.retrieve(p).equals(L.retrieve(q)))
                     L.delete(q);
                 else
@@ -36,7 +35,6 @@ public class Test {
         L.insert(new Data("Eva", "Toronto"), L.first());
         L.insert(new Data("Paolina", "Moscow"),L.first());
         L.insert(new Data("Eva", "Toronto"), L.first());
-        System.out.println();
         L.printList();
         System.out.println();
     }

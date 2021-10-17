@@ -6,10 +6,10 @@ public class Test {
 
         Position p,q;
         p = L.first();
-        while (p.getP().getX() != L.end()){
+        while (!p.equals(L.end())){
             q = L.next(p);
-            while (q.getP().getX() != L.end()){
-                if (L.retrieve(p).getData().equals(L.retrieve(q).getData()))
+            while (!q.equals(L.end())){
+                if (L.retrieve(p).equals(L.retrieve(q)))
                     L.delete(q);
                 else
                     q = L.next(q);

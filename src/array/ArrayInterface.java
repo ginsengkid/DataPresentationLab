@@ -10,7 +10,6 @@ public interface ArrayInterface {
     Position first();
     void makeNull();
     void printList();
-    int end();
-
+    Position end();
 }
 

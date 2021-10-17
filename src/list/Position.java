@@ -7,19 +7,19 @@ public class Position {
         x = d;
     }
 
-    public Node getX() {
+    public Node getNode() {
         return x;
     }
 
-    public Position getP(){
-        return this;
-    }
-
     public void setP(Node p){
-        if (p == null) {
-            x = null;
-            return;
-        }
         x = p;
     }
+
+    public boolean equals(Object o) {
+        if (o == null && (this.x == null)) return true;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return false;
+    }
 }
+
