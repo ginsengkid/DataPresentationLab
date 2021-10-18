@@ -1,11 +1,12 @@
 package array;
 
 public class List implements ArrayInterface {
-    private Position End = new Position(0); //первый свободный
-    private Data[] array;
+    private Position End;
+    private final Data[] array;
 
     public List(){
         array = new Data[50];
+        End = new Position(0);
     }
 
     @Override
@@ -13,12 +14,7 @@ public class List implements ArrayInterface {
         if (End.getX() >= array.length)
             return;
 
-        if (p.getX() - 1 == (End.getX())) {
-            array[p.getX() - 1] = x;
-            End.increaseByOne();
-            return;
-        }
-
+        if (p.getX() >= End.getX() && p.getX() > 1) return;
 
         for (int i = End.getX(); i >= p.getX(); i--){
             array[i] = array[i-1];
@@ -39,7 +35,8 @@ public class List implements ArrayInterface {
     @Override
     public Data retrieve(Position p) throws IncorrectPositionException {
         if ((p.getX() - 1) > End.getX() || array[p.getX() - 1] == null){
-            throw new IncorrectPositionException("Position: " + p.getX() + " out of possible positions: " + (End.getX() + 1));
+            throw new IncorrectPositionException("Position: " + p.getX() +
+                    " out of possible positions: " + (End.getX() + 1));
         }
         return array[p.getX() - 1];
     }
@@ -49,11 +46,6 @@ public class List implements ArrayInterface {
         if ((p.getX() - 1) == End.getX() || array[p.getX() - 1] == null)
             return;
 
-        if (p.getX() - 1 == End.getX() - 1) {
-            End.decreaseByOne();
-            return;
-        }
-
         for (int i = p.getX() - 1; i < End.getX() - 1; i++)
             array[i] = array[i + 1];
         End.decreaseByOne();
@@ -62,7 +54,8 @@ public class List implements ArrayInterface {
     @Override
     public Position next(Position p) throws IncorrectPositionException {
         if ((p.getX() - 1) == End.getX() || array[p.getX() - 1] == null)
-            throw new IncorrectPositionException("Position: " + p.getX() + " out of possible positions: " + (End.getX() + 1));
+            throw new IncorrectPositionException("Position: " + p.getX() +
+                    " out of possible positions: " + (End.getX() + 1));
         return (new Position(p.getX() + 1));
     }
 
@@ -80,13 +73,15 @@ public class List implements ArrayInterface {
 
     @Override
     public void makeNull() {
-        array = null;
+        for (int i = 0; i < array.length; i++){
+            array[i] = null;
+        }
         End = new Position(0);
     }
 
     @Override
     public Position end() {
-        return End;
+        return new Position(End.getX() + 1);
     }
 
     @Override

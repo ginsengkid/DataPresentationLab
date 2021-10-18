@@ -1,7 +1,7 @@
 package list;
 
 public class List implements ListInterface {
-    private final Position End = null; //первый свободный
+    private final Position End = null;
     private Node head;
 
     public List(){
@@ -18,14 +18,14 @@ public class List implements ListInterface {
         }
 
         if (p == null) {
-            Position p1 = getLast();
+            Position p1 = new Position(getLast());
             if (p1 == null) return;
             p1.getNode().setNext(new Node(d));
             return;
         }
 
         //inserting into head, if list length more than 1
-        if (p.getNode().equals(first().getNode())){
+        if (p.getNode() == head){
             Node temp = head;
             head = new Node(d);
             head.setNext(temp);
@@ -33,8 +33,8 @@ public class List implements ListInterface {
         }
 
         //insert into other positions
-        Position temp = getPrevious(p);
-        if (temp != null) {
+        Position temp = new Position(getPrevious(p));
+        if (temp.getNode() != null) {
             if (temp.getNode().getNextNode() == null){
                 temp.getNode().getNextNode().setNext(new Node(d));
             }
@@ -48,13 +48,8 @@ public class List implements ListInterface {
 
     @Override
     public Position locate(Data x) {
-        Node q = head;
-        while (q!=null){
-            if (q.getData().equals(x))
-                return new Position(q);
-            q = q.getNextNode();
-        }
-        return null;
+        if (x == null) return null;
+        return new Position(search(x));
     }
 
     @Override
@@ -66,8 +61,14 @@ public class List implements ListInterface {
     @Override
     public void delete(Position p) {
         if (p == null) return;
-        Position temp = getPrevious(p);
-        if (temp != null){
+
+        if (p.getNode() == head) {
+            head = head.getNextNode();
+            return;
+        }
+
+        Position temp = new Position(getPrevious(p));
+        if (temp.getNode() != null){
             Node tempNode = temp.getNode().getNextNode();
             temp.getNode().setNext(tempNode.getNextNode());
             p.setP(temp.getNode().getNextNode());
@@ -76,16 +77,24 @@ public class List implements ListInterface {
 
     @Override
     public Position next(Position p) throws IncorrectPositionException {
-        if (p.getNode() == null) throw new IncorrectPositionException("No such position in the list");
-        return new Position(p.getNode().getNextNode());
+        if (p == null || p.getNode() == null) throw new IncorrectPositionException("No such position in the list");
+
+        if (p.getNode() == head) {
+            if (head.getNextNode() == null) throw new IncorrectPositionException("No such position in the list");
+            return new Position(head.getNextNode());
+        }
+
+        Node temp = getPrevious(p);
+        if (temp == null) throw new IncorrectPositionException("No such position in the list");
+        return new Position(temp.getNextNode());
     }
 
     @Override
     public Position previous(Position p) throws IncorrectPositionException {
         if (p == null || p.getNode() == head) throw new IncorrectPositionException("No such position in the list");
 
-        Position result = getPrevious(p);
-        if (result != null) return result;
+        Node result = getPrevious(p);
+        if (result != null) return new Position(result);
         throw new IncorrectPositionException("No such position in the list");
     }
 
@@ -115,31 +124,40 @@ public class List implements ListInterface {
         }
     }
 
-    private Position getPrevious(Position p){
+    private Node getPrevious(Position p) {
         Node q = head;
-        Node q2 = head.getNextNode();
+        Node q2 = null;
 
-        while (q2 != null){
-            if (p.getNode() == q2){
-                return new Position(q);
+        while (q != null){
+            if (p.getNode() == q) {
+                return q2;
             }
+            q2 = q;
             q = q.getNextNode();
-            q2 = q2.getNextNode();
         }
         return null;
     }
 
-    private Position getLast(){
+    private Node getLast() {
         Node q = head;
-        if (q == null) return null;
-        Node q2 = head.getNextNode();
-        if (q2 == null) return null;
-        while (q2 != null){
-            q = q2;
-            q2 = q.getNextNode();
+        Node q2 = null;
+        while (q != null){
+            q2 = q;
+            q = q.getNextNode();
         }
-        return new Position(q);
+        return q2;
     }
+
+    private Node search(Data x){
+        Node q = head;
+        while (q!=null){
+            if (q.getData().equals(x))
+                return q;
+            q = q.getNextNode();
+        }
+        return null;
+    }
+
 
     @Override
     public Position end() {

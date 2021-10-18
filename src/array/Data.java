@@ -42,12 +42,14 @@ public class Data {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Data Data = (array.Data) o;
-        for (int i = 0; i < name.length; i++){
+
+        for (int i = 0; i < name.length; i++) {
             try {
                 if (name[i] != Data.name[i]) return false;
             }catch (Exception e){return false;}
         }
-        for (int i = 0; i < address.length; i++){
+
+        for (int i = 0; i < address.length; i++) {
             try {
                 if (address[i] != Data.address[i]) return false;
             }catch (Exception e){return false;}
