@@ -17,14 +17,13 @@ public class List implements ListInterface {
             return;
         }
 
-        if (p == null) {
+        if (p.getNode() == null) {
             Position p1 = new Position(getLast());
-            if (p1 == null) return;
             p1.getNode().setNext(new Node(d));
             return;
         }
 
-        //inserting into head, if list length more than 1
+        //inserting into head
         if (p.getNode() == head){
             Node temp = head;
             head = new Node(d);
@@ -161,6 +160,6 @@ public class List implements ListInterface {
 
     @Override
     public Position end() {
-        return null;
+        return new Position (null);
     }
 }
