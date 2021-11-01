@@ -1,5 +1,4 @@
 package DoublyLinkedList;
-
 public class Test {
     public static void main(String[] args) throws IncorrectPositionException {
         List L = new List();
@@ -32,10 +31,11 @@ public class Test {
         L.insert(new Data("Antonina", "Rome"), L.first());
         L.insert(new Data("Eva", "Toronto"), L.first());
         L.insert(new Data("Antonina", "Rome"), L.first());
+        L.insert(new Data("Eva", "Toronto"), L.first());
+        L.insert(new Data("Eva", "Toronto"), L.first());
         L.insert(new Data("Katya", "Helsinki"), L.first());
-        L.insert(new Data("Eva", "Toronto"), L.first());
         L.insert(new Data("Paolina", "Moscow"),L.first());
-        L.insert(new Data("Eva", "Toronto"), L.first());
+
         L.printList();
         System.out.println();
     }

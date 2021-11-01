@@ -1,7 +1,6 @@
 package list;
 
 public class List implements ListInterface {
-    private final Position End = null;
     private Node head;
 
     public List(){
@@ -76,7 +75,7 @@ public class List implements ListInterface {
 
     @Override
     public Position next(Position p) throws IncorrectPositionException {
-        if (p == null || p.getNode() == null) throw new IncorrectPositionException("No such position in the list");
+        if (p == null ) throw new IncorrectPositionException("No such position in the list");
 
         if (p.getNode() == head) {
             if (head.getNextNode() == null) throw new IncorrectPositionException("No such position in the list");
@@ -85,7 +84,7 @@ public class List implements ListInterface {
 
         Node temp = getPrevious(p);
         if (temp == null) throw new IncorrectPositionException("No such position in the list");
-        return new Position(temp.getNextNode());
+        return new Position(temp.getNextNode().getNextNode());
     }
 
     @Override

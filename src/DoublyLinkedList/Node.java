@@ -1,16 +1,24 @@
 package DoublyLinkedList;
 
 public class Node {
-    Data data;
-    Node next;
-    Node prev;
+    private Data data;
+    private Node next;
+    private Node prev;
 
     public Node(Data d){
-        new Node (d.getName(), d.getAddress());
+        data = new Data(d.getName(), d.getAddress());
     }
 
     public Node(char[] name, char[] address){
         data = new Data(name, address);
+    }
+
+    public Node getNextNode() {
+        return this.next;
+    }
+
+    public Node getPrevNode() {
+        return this.prev;
     }
 
     public Data getData() {

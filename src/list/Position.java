@@ -19,7 +19,8 @@ public class Position {
         if (o == null && (this.x == null)) return true;
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        return false;
+        Position p = (Position)o;
+        return p.x == null && (this.x == null);
     }
 }
 
