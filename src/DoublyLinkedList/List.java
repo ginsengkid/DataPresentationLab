@@ -12,32 +12,22 @@ public class List implements DoublyLinkedInterface{
     @Override
     public void insert(Data d, Position p) {
         if(head == tail){
-            if (p.getNode() == null){
-                if (head == null) {
-                    //empty list
-                    head = new Node(d);
-                    tail = head;
-                    return;
-                }
-
-                //inserting into second elem, when tail == head != null
-                head.setNext(new Node(d));
-                tail = head.getNextNode();
-                tail.setPrev(head);
-                return;
-            }
-
-            //inserting into head elem, when tail == head != null
-            if (p.getNode() == head){
+            if (p.getNode() == null && head == null){
+                //empty list
                 head = new Node(d);
-                head.setNext(tail);
-                tail.setPrev(head);
+                tail = head;
                 return;
             }
+
+            //inserting into second elem, when tail == head != null
+            head.setNext(new Node(d));
+            tail = head.getNextNode();
+            tail.setPrev(head);
+            return;
         }
 
-        //inserting into tail
-        if (p == null){
+        //inserting into null
+        if (p.getNode() == null){
             tail.setNext(new Node(d));
             tail.getNextNode().setPrev(tail);
             tail = tail.getNextNode();
@@ -46,18 +36,27 @@ public class List implements DoublyLinkedInterface{
             return;
         }
 
-        //inserting into head
-        if (p.getNode() == head){
-            Node temp = head;
-            head = new Node(d);
-            head.setNext(temp);
-            temp.setPrev(head);
+        //insert into tail
+        if (p.getNode() == tail){
+            Node temp = tail.getPrev();
+            temp.setNext(new Node(d));
+            temp.getNextNode().setNext(tail);
+            temp.getNextNode().setPrev(temp);
+            tail.setPrev(temp.getNextNode());
             return;
         }
 
         //all other situations
-        Node temp = getElem(p);
-        if (temp == null) return;
+        Node temp;
+        if (p.getNode() == head) temp = head;
+
+        else {
+            if (isInList(p))
+                temp = p.getNode();
+            else return;
+        }
+
+
         Node next = temp.getNextNode();
         temp.setNext(new Node(d));
         temp.getNextNode().setNext(next);
@@ -75,9 +74,9 @@ public class List implements DoublyLinkedInterface{
     public Data retrieve(Position p) throws IncorrectPositionException {
         if (p == null) throw new IncorrectPositionException("no such position in this List");
         if (head == null) throw new IncorrectPositionException("list is empty");
-        Node res = getElem(p);
-        if (res == null) return null;
-        return res.getData();
+
+        if (!isInList(p)) return null;
+        return p.getNode().getData();
     }
 
     @Override
@@ -85,7 +84,7 @@ public class List implements DoublyLinkedInterface{
         if (head == null || tail == null) return;
         if (p == null) return;
 
-        if (head == tail){
+        if (head == tail && p.getNode() == head){
             head = null;
             tail = null;
         }
@@ -104,7 +103,8 @@ public class List implements DoublyLinkedInterface{
             return;
         }
 
-        Node temp = getElem(p);
+        if (!isInList(p)) return;
+        Node temp = p.getNode();
         Node prev = temp.getPrev();
         prev.setNext(temp.getNextNode());
         temp.getNextNode().setPrev(prev);
@@ -124,9 +124,8 @@ public class List implements DoublyLinkedInterface{
            return new Position(null);
        }
 
-       Node temp = getElem(p);
-       if (temp == null) throw new IncorrectPositionException("no such pos in the list");
-       return new Position(temp.getNextNode());
+       if (!isInList(p)) throw new IncorrectPositionException("no such pos in the list");
+       return new Position(p.getNode().getNextNode());
     }
 
     @Override
@@ -141,9 +140,9 @@ public class List implements DoublyLinkedInterface{
             throw new IncorrectPositionException("no such pos in the list");
         }
 
-        Node temp = getElem(p);
-        if (temp == null) throw new IncorrectPositionException("no such pos in the list");
-        return new Position(temp.getPrevNode());
+
+        if (!isInList(p)) throw new IncorrectPositionException("no such pos in the list");
+        return new Position(p.getNode().getPrevNode());
     }
 
     @Override
@@ -175,24 +174,24 @@ public class List implements DoublyLinkedInterface{
 
     @Override
     public Position end() {
-        return null;
+        return new Position(null);
     }
 
-    private Node getElem(Position p){
+    private Boolean isInList(Position p){
         Node q = head;
 
         while (q != null){
             if (p.getNode() == q) {
-                return q;
+                return true;
             }
             q = q.getNextNode();
         }
-        return null;
+        return false;
     }
 
     private Node search(Data x){
         Node q = head;
-        while (q!=null){
+        while (q != null){
             if (q.getData().equals(x))
                 return q;
             q = q.getNextNode();

@@ -87,7 +87,7 @@ public class List implements ArrayInterface {
     @Override
     public void printList() {
         for (int i = 0; i < End.getX(); i++){
-            System.out.print((i + 1) + ": ");
+            System.out.print((i + 1) + ") ");
             array[i].printData();
         }
     }
