@@ -53,6 +53,9 @@ public class List implements ListInterface {
     @Override
     public Data retrieve(Position p) throws IncorrectPositionException {
         if (p == null) throw new IncorrectPositionException("no such position in this List");
+
+        Node temp = getPrevious(p);
+        if (temp == null) throw new IncorrectPositionException("no such position in this List");
         return p.getNode().getData();
     }
 
