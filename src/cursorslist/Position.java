@@ -10,6 +10,9 @@ public class Position {
         return x;
     }
 
+    public void setX(int value)
+        {this.x = value;}
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

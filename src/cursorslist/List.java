@@ -2,12 +2,12 @@ package cursorslist;
 
 public class List implements CursorsInterface{
     private static final Node[] mem;
-    private static int space;
+    private static Position space;
     private int head;
 
     static {
         mem = new Node[50];
-        space = 0;
+        space = new Position(0);
         for (int i = 0; i < mem.length - 1; i++){
             mem[i] = new Node(i + 1);
         }
@@ -20,15 +20,14 @@ public class List implements CursorsInterface{
 
     @Override
     public void insert(Data d, Position p) {
-        if (space == -1) return;
+        if (space.getX() == -1) return;
 
         //inserting into empty list
         if (head == -1){
             if (p.getX() == -1){
-                head = space;
-                space = mem[space].getNextNode();
+                head = space.getX();
+                space.setX(mem[space.getX()].getNextNode());
                 mem[head].setNode(d, -1);
-
                 return;
             }
             return;
@@ -36,8 +35,8 @@ public class List implements CursorsInterface{
 
         //inserting into the LAST elem
         if (p.getX() == -1) {
-            int temp = space;
-            space = mem[space].getNextNode();
+            int temp = space.getX();
+            space.setX(mem[space.getX()].getNextNode());
             int pos = getLast();
             mem[pos].setNext(temp);
             mem[temp].setNode(d, -1);
@@ -46,9 +45,8 @@ public class List implements CursorsInterface{
 
         //inserting into head
         if (p.getX() == head){
-            int tempSpace = space;
-            space = mem[space].getNextNode();
-
+            int tempSpace = space.getX();
+            space.setX(mem[space.getX()].getNextNode());
 
             mem[tempSpace].setNode(mem[head].getData(), mem[head].getNextNode());
             mem[head].setNode(d, tempSpace);
@@ -60,8 +58,8 @@ public class List implements CursorsInterface{
         System.out.println(temp);
         if (temp == -1) return;
         int next = mem[temp].getNextNode();
-        int tempSpace = space;
-        space = mem[space].getNextNode();
+        int tempSpace = space.getX();
+        space.setX(mem[space.getX()].getNextNode());
         mem[tempSpace].setNode(d, next);
         mem[temp].setNext(tempSpace);
 
@@ -69,7 +67,7 @@ public class List implements CursorsInterface{
 
     @Override
     public Position locate(Data x) {
-        if (x == null) return null;
+        if (x == null || head == -1) return null;
         return (search(x));
     }
 
@@ -80,6 +78,9 @@ public class List implements CursorsInterface{
 
         int temp = getPrevious(p);
         if (temp == -1) throw new IncorrectPositionException("incorrect index");
+        temp = mem[temp].getNextNode();
+        if (temp == -1) throw new IncorrectPositionException("incorrect index");
+
         return mem[temp].getData();
     }
 
@@ -101,8 +102,11 @@ public class List implements CursorsInterface{
 
         int temp = getPrevious(p);
         if (temp == -1) throw new IncorrectPositionException("incorrect index");
-        else temp = mem[temp].getNextNode();
+        temp = mem[temp].getNextNode();
         if (temp == -1) throw new IncorrectPositionException("incorrect index");
+        temp = mem[temp].getNextNode();
+        if (temp == -1) throw new IncorrectPositionException("incorrect index");
+
 
         return new Position(mem[temp].getNextNode());
     }
@@ -167,27 +171,27 @@ public class List implements CursorsInterface{
 
     private int getLast() {
         int q = head;
-        while (true){
-            if (mem[q].getNextNode() == -1){
-                return q;
-            }
+        int q2 = -1;
+
+        while (q != -1){
+            q2 = q;
             q = mem[q].getNextNode();
         }
+        return q2;
     }
 
     private Position search(Data x){
         int q = head;
-        while (true){
+        int q2 = -1;
 
-            if (mem[q].getNextNode() == -1){
-                return new Position(-1);
-            }
-
-            if (mem[q].getData().equals(x)){
+        while (q != -1){
+            if (mem[q].getData().equals(x)) {
                 return new Position(q);
             }
+            q2 = q;
             q = mem[q].getNextNode();
         }
+        return new Position(-1);
     }
 
     public static void printMem(){
@@ -200,6 +204,4 @@ public class List implements CursorsInterface{
         }
         System.out.println();
     }
-
-
 }
