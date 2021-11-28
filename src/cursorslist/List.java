@@ -2,7 +2,7 @@ package cursorslist;
 
 public class List implements CursorsInterface{
     private static final Node[] mem;
-    private static Position space;
+    private static final Position space;
     private int head;
 
     static {
@@ -86,7 +86,26 @@ public class List implements CursorsInterface{
 
     @Override
     public void delete(Position p) {
+        if (head == -1) return;
 
+        if (p.getX() == head){
+            int temp = mem[head].getNextNode();
+            mem[head].setNext(mem[temp].getNextNode());
+            mem[temp].setNext(space.getX());
+            space.setX(temp);
+
+            p.setX(mem[head].getNextNode());
+            return;
+        }
+
+        int temp = getPrevious(p);
+        if (temp == -1) return;
+        int next = mem[temp].getNextNode();
+        if (next == -1) return;
+        mem[temp].setNext(mem[next].getNextNode());
+        mem[next].setNext(space.getX());
+        space.setX(next);
+        p.setX(mem[temp].getNextNode());
     }
 
     @Override
@@ -101,8 +120,6 @@ public class List implements CursorsInterface{
         }
 
         int temp = getPrevious(p);
-        if (temp == -1) throw new IncorrectPositionException("incorrect index");
-        temp = mem[temp].getNextNode();
         if (temp == -1) throw new IncorrectPositionException("incorrect index");
         temp = mem[temp].getNextNode();
         if (temp == -1) throw new IncorrectPositionException("incorrect index");

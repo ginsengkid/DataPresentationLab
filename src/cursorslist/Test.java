@@ -5,20 +5,21 @@ public class Test {
         List L = new List();
         init(L);
 
-        List.printMem();
-       /* Position p,q;
+        Position p,q;
         p = L.first();
         while (!p.equals(L.end())){
             q = L.next(p);
-            while (!q.equals(L.end())){
+            while (!q.equals(L.end())) {
+
                 if (L.retrieve(p).equals(L.retrieve(q)))
                     L.delete(q);
-                else
+                else {
                     q = L.next(q);
+                }
             }
             p = L.next(p);
         }
-        L.printList();*/
+        L.printList();
     }
 
     public static void init(List L){

@@ -54,6 +54,10 @@ public class List implements ListInterface {
     public Data retrieve(Position p) throws IncorrectPositionException {
         if (p == null) throw new IncorrectPositionException("no such position in this List");
 
+        if (p.getNode() == head){
+            return head.getData();
+        }
+
         Node temp = getPrevious(p);
         if (temp == null) throw new IncorrectPositionException("no such position in this List");
         return p.getNode().getData();
@@ -123,6 +127,7 @@ public class List implements ListInterface {
             p = p.getNextNode();
             i++;
         }
+        System.out.println();
     }
 
     private Node getPrevious(Position p) {
