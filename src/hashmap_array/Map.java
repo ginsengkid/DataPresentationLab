@@ -21,16 +21,14 @@ public class Map {
 
     private RangeType [] M;
 
-    public Map()
-    {
+    public Map() {
         M = new RangeType[RangeType.LAST - RangeType.FIRST + 1];
         int i = RangeType.FIRST;
         for(; i <= RangeType.LAST; i++)
             M[i - RangeType.FIRST] = new RangeType(RangeType.NODEF);
     }
 
-    public void MAKENULL()
-    {
+    public void MAKENULL() {
         int i = RangeType.FIRST;
         for(; i <= RangeType.LAST; i++)
             M[i - RangeType.FIRST].c = RangeType.NODEF;
@@ -41,16 +39,14 @@ public class Map {
         M[d].c = r;
     }
 
-    public boolean COMPUTE(int d, RangeType r)
-    {
+    public boolean COMPUTE(int d, RangeType r) {
         if (M[d].c == RangeType.NODEF)
             return false;
         r.c = M[d].c;
         return true;
     }
 
-    public void PRINT()
-    {
+    public void PRINT() {
         for(int i = 0; i < M.length; i++)
             System.out.printf("%3d", i);
         System.out.printf("\n");

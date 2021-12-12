@@ -1,8 +1,8 @@
 package list;
 
 public class Data {
-    private final char[] name = new char[20];
-    private final char[] address = new char[50];
+    private char[] name = new char[20];
+    private char[] address = new char[50];
 
     public Data(char[] name1, char[] address1) {
         for (int i = 0; i < name1.length; i++)
@@ -17,6 +17,12 @@ public class Data {
 
     public char[] getName() {
         return name;
+    }
+
+    public void setAddress(char[] a){
+        address = new char[50];
+        for (int i = 0; i < a.length; i++)
+            this.address[i] = a[i];
     }
 
     public Data(String name, String address) {
@@ -50,17 +56,15 @@ public class Data {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Data Data = (Data) o;
-        for (int i = 0; i < name.length; i++){
-            try {
-                if (name[i] != Data.name[i]) return false;
-            }catch (Exception e){return false;}
-        }
-        for (int i = 0; i < address.length; i++){
-            try {
-                if (address[i] != Data.address[i]) return false;
-            }catch (Exception e){return false;}
-        }
+        return (compareCharArrays(Data.name, this.name) && compareCharArrays(Data.address, this.address));
+    }
 
+    public boolean compareCharArrays(char[] q1, char[] q2){
+        int len = Math.min(q1.length, q2.length);
+        for (int i = 0; i < len; i++){
+            if (q1[i] == '0' || q2[i] == '0') continue;
+            if (q1[i] != q2[i]) return false;
+        }
         return true;
     }
 }

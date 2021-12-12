@@ -3,7 +3,6 @@ public class Test {
     public static void main(String[] args) throws IncorrectPositionException {
         List L = new List();
         init(L);
-
         Position p,q;
         p = L.first();
         while (!p.equals(L.end())){
