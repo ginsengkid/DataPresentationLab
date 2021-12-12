@@ -1,4 +1,4 @@
-package hashmap;
+package hashmap_array;
 
 public class Map {
     public static class RangeType
