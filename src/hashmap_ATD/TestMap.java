@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class TestMap {
 
     public static void main(String[] args) throws FileNotFoundException {
-        String filePath = "C:\\Users\\Valer4ick PC\\idea\\DataPresentationLab\\src\\Addresses.txt";
+        String filePath = "src\\Addresses.txt";
 
         Map map = new Map();
 

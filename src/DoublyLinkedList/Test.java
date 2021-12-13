@@ -1,6 +1,6 @@
 package DoublyLinkedList;
 public class Test {
-    public static void main(String[] args) throws IncorrectPositionException {
+    public static void main(String[] args) {
         List L = new List();
         init(L);
 

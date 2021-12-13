@@ -33,7 +33,7 @@ public class List implements ArrayInterface {
     }
 
     @Override
-    public Data retrieve(Position p) throws IncorrectPositionException {
+    public Data retrieve(Position p) {
         if ((p.getX() - 1) > End.getX() || array[p.getX() - 1] == null){
             throw new IncorrectPositionException("Position: " + p.getX() +
                     " out of possible positions: " + (End.getX() + 1));
@@ -52,7 +52,7 @@ public class List implements ArrayInterface {
     }
 
     @Override
-    public Position next(Position p) throws IncorrectPositionException {
+    public Position next(Position p) {
         if ((p.getX() - 1) == End.getX() || array[p.getX() - 1] == null)
             throw new IncorrectPositionException("Position: " + p.getX() +
                     " out of possible positions: " + (End.getX() + 1));
@@ -60,7 +60,7 @@ public class List implements ArrayInterface {
     }
 
     @Override
-    public Position previous(Position p) throws IncorrectPositionException {
+    public Position previous(Position p) {
         if ((p.getX() - 1) == End.getX() || array[p.getX() - 1] == null || p.getX() == 1)
             throw new IncorrectPositionException("No position behind " + p.getX());
         return (new Position(p.getX() -1));
