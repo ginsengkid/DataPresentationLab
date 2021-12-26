@@ -40,6 +40,7 @@ public class Tree {
             array[i] = new ArrayNode(i+1);
         }
         space = 0;
+        array[49] = new ArrayNode(-1);
     }
 
     public Tree(){
@@ -54,7 +55,6 @@ public class Tree {
         root = space;
         space = array[space].name;
         array[root].label = l;
-        System.out.println(space);
         return this;
     }
 
@@ -70,7 +70,6 @@ public class Tree {
         array[root].next = new Node(root, new Node(t.root, null));
         array[root].label = l;
         t.root = -1;
-        System.out.println(space);
         return this;
     }
 
@@ -82,5 +81,12 @@ public class Tree {
         System.out.println(array[root].label);
     }
 
+    public static void printMem(){
+        for (int i = 0; i < len; i ++){
+            System.out.print(array[i].label + " " + array[i].name);
+            if (array[i].next !=  null) System.out.print(" " + array[i].next.name);
+            System.out.println();
+        }
+    }
 
 }

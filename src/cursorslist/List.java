@@ -115,8 +115,7 @@ public class List implements CursorsInterface{
         //next (head)
         if (p.getX() == head){
             int temp = mem[head].getNextNode();
-            if (temp == -1) throw new IncorrectPositionException("incorrect index");
-            else return new Position(temp);
+            return new Position(temp);
         }
 
         int temp = getPrevious(p);

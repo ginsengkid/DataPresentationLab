@@ -85,7 +85,6 @@ public class List implements ListInterface {
         if (p == null ) throw new IncorrectPositionException("No such position in the list");
 
         if (p.getNode() == head) {
-            if (head.getNextNode() == null) throw new IncorrectPositionException("No such position in the list");
             return new Position(head.getNextNode());
         }
 
