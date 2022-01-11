@@ -10,9 +10,8 @@ public class Tree {
         public ArrayNode(char l, Node n1, int n2){
             label = l;
             next = n1;
-            name = n2;
-        }
 
+        }
         public ArrayNode(int n){
             name = n;
         }
@@ -22,11 +21,10 @@ public class Tree {
         private int name;
         private Node next;
 
-        public Node(int n1, Node n2){
+        public Node(int n1, Node n2) {
             name = n1;
             next = n2;
         }
-
     }
 
     private int root;
@@ -47,46 +45,95 @@ public class Tree {
         root = -1;
     }
 
-    //a.create(b,b,'c'); - исключение
     public Tree create(char l){
-        if(root != -1){
-            return create(l, this);
+        if (space == -1) return null;
+        if (root == -1) {
+            root = space;
+            space = array[space].name;
+            array[root].label = l;
         }
-        root = space;
-        space = array[space].name;
-        array[root].label = l;
+        else {
+            int temp = space;
+            space = array[space].name;
+            array[temp].label = l;
+            array[temp].next = new Node(root, null);
+            root = temp;
+        }
         return this;
     }
 
     public Tree create(char l, Tree t){
-        //если мы вызываем не на пустом дереве - ошибка, если это не одно и то же дереве
-        if (root != -1)
-            if (this != t) throw new MyException("Got 2 trees instead of 1 plain and one tree expected");
-            else  return t.create(l);
-        if (this == t) return t.create(l);
+        if (space == -1) return null;
 
-        root = space;
+        if (root == -1) return t.create(l);
+        if (t.root == -1) return create(l);
+
+        int temp = space;
         space = array[space].name;
-        array[root].next = new Node(root, new Node(t.root, null));
-        array[root].label = l;
-        t.root = -1;
+        array[temp].label = l;
+        array[temp].next = new Node(root, new Node(t.root, null));
+        root = temp;
         return this;
     }
 
-    public Tree create(char l, Tree t,Tree t1){
-        return this;
+    public int root(){
+        return root;
+    }
+
+    public int leftMostChild(int n){
+        if (array[n].next == null) return -1;
+        if (array[n].next.next == null) return -1;
+        if (n == root && array[n].next != null)
+            return array[n].next.name;
+        int temp = ifInTree(n, root);
+        if (temp == -1) return -1;
+        else return array[n].next.name;
+    }
+
+    public char label(int n){
+        int a = ifInTree(n, root);
+        System.out.println(a);
+        if (a != -1) return array[n].label;
+        else return ' ';
     }
 
     public void print(){
-        System.out.println(array[root].label);
+
     }
 
     public static void printMem(){
         for (int i = 0; i < len; i ++){
+            if (array[i].label == ' ') continue;
             System.out.print(array[i].label + " " + array[i].name);
-            if (array[i].next !=  null) System.out.print(" " + array[i].next.name);
+            if (array[i].next !=  null) {
+                System.out.print(" " + array[i].next.name);
+                if (array[i].next.next != null){
+                    System.out.print(" " + array[i].next.next.name);
+                }
+            }
+
             System.out.println();
         }
+    }
+
+    private int ifInTree(int n, int r){
+        Node left = array[r].next;
+        if (left == null) return -1;
+
+        if (n == left.name) return r;
+
+
+        Node right = left.next;
+        if (right != null) {
+            if (right.name == n)
+                return r;
+        }
+        else return -1;
+
+
+        ifInTree(n, left.name);
+        ifInTree(n, right.name);
+        return -1;
     }
 
 }

@@ -55,13 +55,15 @@ public class List implements CursorsInterface{
         }
 
         int temp = getPrevious(p);
-        System.out.println(temp);
         if (temp == -1) return;
-        int next = mem[temp].getNextNode();
+
+        int myElement = mem[temp].getNextNode();
         int tempSpace = space.getX();
-        space.setX(mem[space.getX()].getNextNode());
-        mem[tempSpace].setNode(d, next);
+
+        mem[tempSpace] = new Node(d);
         mem[temp].setNext(tempSpace);
+        mem[tempSpace].setNext(myElement);
+        space.setX(mem[space.getX()].getNextNode());
 
     }
 
@@ -89,12 +91,11 @@ public class List implements CursorsInterface{
         if (head == -1) return;
 
         if (p.getX() == head){
-            int temp = mem[head].getNextNode();
-            mem[head].setNext(mem[temp].getNextNode());
-            mem[temp].setNext(space.getX());
-            space.setX(temp);
-
-            p.setX(mem[head].getNextNode());
+            Position tempSpace = space;
+            space.setX(head);
+            mem[space.getX()].setNext(tempSpace.getX());
+            head = mem[head].getNextNode();
+            p.setX(head);
             return;
         }
 
