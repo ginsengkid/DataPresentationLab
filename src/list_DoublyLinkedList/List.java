@@ -19,10 +19,23 @@ public class List implements DoublyLinkedInterface{
                 return;
             }
 
-            //inserting into second elem, when tail == head != null
-            head.setNext(new Node(d));
+            //inserting into head, when tail == head != null
+            head.setNext(new Node(head.getData()));
+            head.setData(d);
             tail = head.getNextNode();
             tail.setPrev(head);
+
+            return;
+        }
+
+        //inserting in head
+        if (p.getNode() == head){
+            Node temp = head.getNextNode();
+            head.setNext(new Node(head.getData()));
+            head.setData(d);
+            head.getNextNode().setNext(temp);
+            head.getNextNode().setPrev(head);
+            temp.setPrev(head.getNextNode());
             return;
         }
 
@@ -48,14 +61,9 @@ public class List implements DoublyLinkedInterface{
 
         //all other situations
         Node temp;
-        if (p.getNode() == head) temp = head;
-
-        else {
-            if (isInList(p))
-                temp = p.getNode();
-            else return;
-        }
-
+        if (isInList(p))
+            temp = p.getNode();
+        else return;
 
         Node next = temp.getNextNode();
         temp.setNext(new Node(d));

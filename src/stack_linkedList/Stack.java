@@ -10,7 +10,8 @@ public class Stack {
         }
     }
 
-    Node head;
+    private Node head;
+
     public Stack(){
         head = null;
     }

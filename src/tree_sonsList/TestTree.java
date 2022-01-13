@@ -1,4 +1,4 @@
-package tree;
+package tree_sonsList;
 
 public class TestTree {
     public static void main(String[] args) {
@@ -47,6 +47,7 @@ public class TestTree {
 
         t1.print();
 
+        t1.makeNull();
         Tree.printMem();
        /* Tree t3 = new Tree();
         t3.create('q');

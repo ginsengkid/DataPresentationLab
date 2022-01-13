@@ -1,4 +1,4 @@
-package tree;
+package tree_sonsList;
 
 public class Tree {
 
@@ -46,7 +46,7 @@ public class Tree {
     }
 
     public Tree create(char l){
-        if (space == -1) return null;
+        if (space == -1) throw new MyException("No free memory left");
         if (root != -1) {
             array[space].next = new Node(root, null);
         }
@@ -58,7 +58,7 @@ public class Tree {
     }
 
     public Tree create(char l, Tree t){
-        if (space == -1 || t == null) return null;
+        if (space == -1 ) throw new MyException("No free memory left");
 
         if (root == -1) return t.create(l);
         if (t.root == -1) return create(l);
@@ -76,7 +76,7 @@ public class Tree {
     }
 
     public int leftMostChild(int n){
-        if (array[n].next == null) return -1;
+        if (array[n].next == null) throw new MyException("Leave has no children");;
 
         if (n == root && array[n].next != null)
             return array[n].next.name;
@@ -93,11 +93,11 @@ public class Tree {
         if (a != -1) {
             return array[n].label;
         }
-        else return '-';
+        else throw new MyException("No such element in this tree");
     }
 
     public int rightSibling(int n){
-        if (n == root) return -1;
+        if (n == root) throw new MyException("Root has no siblings");
 
         int temp = ifInTree(n, root);
         if (temp == -1) return -1;
@@ -107,12 +107,12 @@ public class Tree {
     }
 
     public int parent(int n){
-        if (n == -1 || n == root || n > len) return -1;
+        if (n == -1 || n == root || n > len) throw new MyException("Incorrect index");
         return ifInTree(n, root);
     }
 
     public void print(){
-        if (root == -1)return;
+        if (root == -1) return;
         System.out.println(root);
         directBypass(root);
         System.out.println();
@@ -177,7 +177,7 @@ public class Tree {
             }
             int temp = array[q.name].name;
             array[q.name].name = space;
-            space = temp;
+            space = q.name;
             q = q.next;
 
         }

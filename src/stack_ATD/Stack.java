@@ -2,7 +2,7 @@ package stack_ATD;
 import list_linkedList.*;
 
 public class Stack {
-    List l;
+    private List l;
 
     public Stack(){
         l = new List();

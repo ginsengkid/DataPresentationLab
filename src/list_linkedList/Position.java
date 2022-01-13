@@ -15,12 +15,13 @@ public class Position {
         x = p;
     }
 
+    public Node getP() {return x;}
+
     public boolean equals(Object o) {
-        if (o == null && (this.x == null)) return true;
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Position p = (Position)o;
-        return p.x == null && (this.x == null);
+        Position Data = (Position) o;
+        return (this.x == Data.x);
     }
 }
 
