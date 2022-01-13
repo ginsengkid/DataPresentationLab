@@ -45,9 +45,9 @@ public class TestTree {
         System.out.println(t1.label(t1.parent(t1.rightSibling(t1.leftMostChild(l2)))));
         System.out.println();
 
+        t1.print();
 
-
-
+        Tree.printMem();
        /* Tree t3 = new Tree();
         t3.create('q');
         l = t3.root();

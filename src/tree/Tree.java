@@ -101,10 +101,9 @@ public class Tree {
 
         int temp = ifInTree(n, root);
         if (temp == -1) return -1;
-        if (array[temp].next.next != null) return array[temp].next.next.name;
+        if (array[temp].next != null && array[temp].next.next != null) return array[temp].next.next.name;
 
         return -1;
-
     }
 
     public int parent(int n){
@@ -113,7 +112,17 @@ public class Tree {
     }
 
     public void print(){
+        if (root == -1)return;
+        System.out.println(root);
+        directBypass(root);
+        System.out.println();
+    }
 
+    public void makeNull(){
+        if (root == -1) return;
+        indirectBypass(root);
+        array[root].name = space;
+        space = root;
     }
 
     public static void printMem(){
@@ -132,23 +141,47 @@ public class Tree {
 
     //return parent
     private int ifInTree(int n, int r){
-        Node left = array[r].next;
-        if (left == null) return -1;
+        Node q = array[r].next;
 
-        if (n == left.name) return r;
+        while (q != null){
+            if (q.name == n) return r;
 
-        Node right = left.next;
-        if (right != null) {
-            if (right.name == n)
-                return r;
+            int temp = ifInTree(n, q.name);
+            if (temp == -1)
+                q = q.next;
+            else return temp;
         }
+        return -1;
 
-        int temp = ifInTree(n, left.name);
-
-        if (temp == - 1 && right != null) {
-            return ifInTree(n, right.name);
-        }
-        return temp;
     }
+
+    private void directBypass(int r){
+        Node q = array[r].next;
+
+        while (q != null){
+            System.out.println(q.name);
+            if (array[q.name].next != null) {
+                directBypass(q.name);
+            }
+            q = q.next;
+        }
+    }
+
+    private void indirectBypass(int r){
+        Node q = array[r].next;
+
+        while (q != null){
+
+            if (array[q.name].next != null) {
+                indirectBypass(q.name);
+            }
+            int temp = array[q.name].name;
+            array[q.name].name = space;
+            space = temp;
+            q = q.next;
+
+        }
+    }
+
 
 }
