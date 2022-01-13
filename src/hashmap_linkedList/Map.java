@@ -1,5 +1,5 @@
 package hashmap_linkedList;
-import list.Data;
+import list_linkedList.Data;
 import java.util.Arrays;
 
 public class Map {

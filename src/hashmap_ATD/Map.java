@@ -1,6 +1,5 @@
 package hashmap_ATD;
-import list.*;
-import java.util.Arrays;
+import list_linkedList.*;
 
 public class Map {
     public static class RangeType {
@@ -19,11 +18,6 @@ public class Map {
 
         public char[] getC() {
             return c;
-        }
-
-        @Override
-        public String toString() {
-            return Arrays.toString(c);
         }
     }
 
