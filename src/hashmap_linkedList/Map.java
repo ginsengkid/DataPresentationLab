@@ -57,6 +57,7 @@ public class Map {
             return;
         }
 
+        //trying to find key
         Node q = head;
         while (q != null){
             if (q.data.compareCharArrays(q.data.getName(), d)){
@@ -66,6 +67,7 @@ public class Map {
             q = q.next;
         }
 
+        //if key not found insert right after head
         if (head.next == null){
             head.next = new Node(d, r, null);
             return;

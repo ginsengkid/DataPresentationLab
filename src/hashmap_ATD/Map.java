@@ -32,23 +32,22 @@ public class Map {
     }
 
     public void assign(char[] d, char[] r) {
+        //only 1 element in the map
         if (l.first().equals(l.end())) {
             l.insert(new Data(d, r), l.first());
             return;
         }
 
         Position q = l.first();
-        try {
-            while (!q.equals(l.end())){
-                Data temp = l.retrieve(q);
-                if (temp.compareCharArrays(d, temp.getName())) {
-                    q.getNode().getData().setAddress(r);
-                    return;
-                }
-                q = l.next(q);
+
+        while (!q.equals(l.end())){
+            Data temp = l.retrieve(q);
+            if (temp.compareCharArrays(d, temp.getName())) {
+                q.getNode().getData().setAddress(r);
+                return;
             }
+            q = l.next(q);
         }
-        catch (Exception e){ e.printStackTrace();}
 
         l.insert(new Data(d,r),l.first()) ;
     }
@@ -58,18 +57,13 @@ public class Map {
             return false;
 
         Position q = l.first();
-        try {
-            while (!q.equals(l.end())){
-                Data temp = l.retrieve(q);
-                if (temp.compareCharArrays(d, temp.getName())) {
-                    q.getNode().getData().setAddress(r);
-                    return true;
-                }
-                q = l.next(q);
+        while (!q.equals(l.end())){
+            Data temp = l.retrieve(q);
+            if (temp.compareCharArrays(d, temp.getName())) {
+                q.getNode().getData().setAddress(r);
+                return true;
             }
-        }
-        catch (Exception e){
-            e.printStackTrace();
+            q = l.next(q);
         }
 
         return false;

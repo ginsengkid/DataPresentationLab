@@ -22,19 +22,17 @@ public class List implements CursorsInterface{
     public void insert(Data d, Position p) {
         if (space.getX() == -1) return;
 
-        //inserting into empty list
-        if (head == -1){
-            if (p.getX() == -1){
+
+        if (p.getX() == -1){
+            //inserting into empty list
+            if (head == -1){
                 head = space.getX();
                 space.setX(mem[space.getX()].getNextNode());
                 mem[head].setNode(d, -1);
                 return;
             }
-            return;
-        }
 
-        //inserting into the LAST elem
-        if (p.getX() == -1) {
+            //inserting into last element
             int temp = space.getX();
             space.setX(mem[space.getX()].getNextNode());
             int pos = getLast();
@@ -42,6 +40,7 @@ public class List implements CursorsInterface{
             mem[temp].setNode(d, -1);
             return;
         }
+
 
         //inserting into head
         if (p.getX() == head){
@@ -51,9 +50,9 @@ public class List implements CursorsInterface{
             mem[tempSpace].setNode(mem[head].getData(), mem[head].getNextNode());
             mem[head].setNode(d, tempSpace);
             return;
-
         }
 
+        //all others situations
         int temp = getPrevious(p);
         if (temp == -1) return;
 
@@ -91,9 +90,8 @@ public class List implements CursorsInterface{
         if (head == -1) return;
 
         if (p.getX() == head){
-            Position tempSpace = space;
             space.setX(head);
-            mem[space.getX()].setNext(tempSpace.getX());
+            mem[space.getX()].setNext(space.getX());
             head = mem[head].getNextNode();
             p.setX(head);
             return;
@@ -114,10 +112,8 @@ public class List implements CursorsInterface{
         if (p.getX() > mem.length) throw new IncorrectPositionException("incorrect index");
 
         //next (head)
-        if (p.getX() == head){
-            int temp = mem[head].getNextNode();
-            return new Position(temp);
-        }
+        if (p.getX() == head) return new Position(mem[head].getNextNode());
+
 
         int temp = getPrevious(p);
         if (temp == -1) throw new IncorrectPositionException("incorrect index");
@@ -144,7 +140,10 @@ public class List implements CursorsInterface{
 
     @Override
     public void makeNull() {
-
+        if (head == -1) return;
+        mem[getLast()].setNext(space.getX());
+        space.setX(head);
+        head = -1;
     }
 
     @Override
@@ -199,26 +198,13 @@ public class List implements CursorsInterface{
 
     private Position search(Data x){
         int q = head;
-        int q2 = -1;
 
         while (q != -1){
             if (mem[q].getData().equals(x)) {
                 return new Position(q);
             }
-            q2 = q;
             q = mem[q].getNextNode();
         }
         return new Position(-1);
-    }
-
-    public static void printMem(){
-        for (int i = 0; i < mem.length; i++){
-            System.out.print(i +  ") ");
-            Data d = mem[i].getData();
-            if (d != null) d.printData();
-            System.out.print(" | next: " + mem[i].getNextNode());
-            System.out.println();
-        }
-        System.out.println();
     }
 }

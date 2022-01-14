@@ -9,6 +9,7 @@ public class List implements ListInterface {
 
     @Override
     public void insert(Data d, Position p) {
+        //empty list
         if (head == null){
             if (p.getNode() == null) {
                 head = new Node(d);
@@ -16,6 +17,7 @@ public class List implements ListInterface {
             return;
         }
 
+        //inserting into last elem
         if (p.getNode() == null) {
             Position p1 = new Position(getLast());
             p1.getNode().setNext(new Node(d));
@@ -66,8 +68,9 @@ public class List implements ListInterface {
 
     @Override
     public void delete(Position p) {
-        if (p == null) return;
+        if (p == null || head == null) return;
 
+        //deleting head
         if (p.getNode() == head) {
             head = head.getNextNode();
             return;
@@ -85,9 +88,7 @@ public class List implements ListInterface {
     public Position next(Position p) throws IncorrectPositionException {
         if (p == null ) throw new IncorrectPositionException("No such position in the list");
 
-        if (p.getNode() == head) {
-            return new Position(head.getNextNode());
-        }
+        if (p.getNode() == head) return new Position(head.getNextNode());
 
         Node temp = getPrevious(p);
         if (temp == null) throw new IncorrectPositionException("No such position in the list");

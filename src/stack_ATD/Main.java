@@ -9,5 +9,8 @@ public class Main {
         s.top().printData();
         s.push(new Data("Ann", "SPB"));
         s.top().printData();
+        s.pop().printData();
+        s.top().printData();
+
     }
 }

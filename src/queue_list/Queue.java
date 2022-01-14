@@ -20,6 +20,7 @@ public class Queue {
     }
 
     public void enqueue(int x) {
+        //empty queue
         if (tail == null){
             tail = new Node(x, null);
             tail.next = tail;
@@ -27,11 +28,13 @@ public class Queue {
             return;
         }
 
+        //one elem
         if (head == tail){
             head = new Node(x, tail);
             return;
         }
 
+        //all others
         head.next = new Node(head.n, head.next);
         head.n = x;
     }
@@ -55,10 +58,6 @@ public class Queue {
         Node q = head;
         Node q2 = null;
         while (q != tail){
-            if (tail == q) {
-                q2.next = head;
-                return t;
-            }
             q2 = q;
             q = q.next;
         }
