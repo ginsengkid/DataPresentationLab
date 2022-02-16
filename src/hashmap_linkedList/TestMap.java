@@ -59,18 +59,6 @@ public class TestMap {
         map.print();
         System.out.println(">");
 
-        System.out.println("\tTest of compute:\n<");
-        Map.RangeType rangeType = new Map.RangeType(new char[] {'?'});
-        for (char[] name : namesSet) {
-            if(map.compute(name, rangeType.getC())) {
-                String n = new String(name);
-                System.out.println(n + "\t\t" + rangeType.toString());
-            }
-            else {
-                System.out.println("There is no " + new String(name));
-            }
-        }
-        System.out.println(">");
 
         map.makeNull();
         System.out.println("\tAfter make null:\n<");
