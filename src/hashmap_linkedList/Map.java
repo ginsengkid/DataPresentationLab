@@ -1,32 +1,7 @@
 package hashmap_linkedList;
 import list_linkedList.Data;
-import java.util.Arrays;
 
 public class Map {
-    public static class RangeType {
-        private char[] c;
-        public final static char NODEF = '?';
-        public final static char FIRST = 'A';
-        public final static char LAST = 'Z';
-
-        public RangeType(char[] x) {
-            c = x;
-        }
-
-        public void Print() {
-            System.out.printf("%3c", c[0]);
-        }
-
-        public char[] getC() {
-            return c;
-        }
-
-        @Override
-        public String toString() {
-            return Arrays.toString(c);
-        }
-    }
-
     private static class Node{
         Data data;
         Node next;
