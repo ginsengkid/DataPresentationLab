@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class TestMap {
 
     public static void main(String[] args){
-        String filePath = "src\\Addresses.txt";
+        String filePath = "./src/Addresses.txt";
 
         Map map = new Map();
 

@@ -7,19 +7,14 @@ public class Tree {
         private Node next;
         private char label;
 
-        public ArrayNode(char l, Node n1, int n2){
-            label = l;
-            next = n1;
-        }
-
         public ArrayNode(int n){
             name = n;
         }
     }
 
     private static class Node{
-        private int name;
-        private Node next;
+        private final int name;
+        private final Node next;
 
         public Node(int n1, Node n2) {
             name = n1;
@@ -28,7 +23,7 @@ public class Tree {
     }
 
     private int root;
-    private static ArrayNode[] array;
+    private static final ArrayNode[] array;
     private static int space;
     private final static int len = 10;
 
